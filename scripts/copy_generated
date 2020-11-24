@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+# The root of the repo directory
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
+
+input_dir="${ROOT_DIR}/api/v1/"
+out_dir="${ROOT_DIR}/api/v1alpha3"
+mkdir -p "${out_dir}"
+
+cp -r $input_dir $out_dir
+
+echo "Processing $out_dir files..."
+for f in "${out_dir}/*"
+do
+  sed -i '' 's/package\ v1/package\ v1alpha3/' $f
+done
+
+echo "done copy generated files"
